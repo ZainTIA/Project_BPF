@@ -1,10 +1,8 @@
 <?php
 
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
 
 return new class extends Migration
 {
@@ -23,18 +21,13 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('sku')->unique();
 
-
             $table->text('description')->nullable();
-
 
             $table->string('size', 30)->nullable();
 
-
             $table->decimal('price', 12, 2);
 
-
             $table->unsignedInteger('stock')->default(1);
-
 
             $table->enum('condition', [
                 'like_new',
@@ -42,18 +35,15 @@ return new class extends Migration
                 'fair'
             ])->default('good');
 
-
             $table->enum('status', [
                 'available',
                 'sold',
                 'draft'
             ])->default('available');
 
-
             $table->timestamps();
         });
     }
-
 
     public function down(): void
     {

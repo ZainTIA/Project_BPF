@@ -2,26 +2,18 @@
 
 namespace App\Http\Middleware;
 
-
-use App\Enums\UserRole;
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
-
+use Illuminate\Support\Facades\Auth;
+use App\Enums\UserRole;
 
 class IsCustomer
 {
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
-        if (!auth()->check()) {
-            return redirect()->route('login');
+        if (!Auth::check() || Auth::user()->role !== UserRole::CUSTOMER) {
+            abort(403, 'Akses hanya untuk Customer.');
         }
-
-
-        if (auth()->user()->role !== UserRole::CUSTOMER) {
-            abort(403, 'Halaman ini khusus customer.');
-        }
-
 
         return $next($request);
     }
